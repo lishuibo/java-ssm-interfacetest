@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.litl.www.dao.UserDao">
+    <resultMap type="User" id="userResultMap" >
+        <id property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <result property="password" column="password"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+        <result property="permission" column="permission"/>
+        <result property="isDelete" column="isDelete"/>
+    </resultMap>
+    <select id="login" parameterType="User" resultType="int">
+        select count(*) from user
+        <trim prefix="WHERE" prefixOverrides="and">
+            <if test="null != id and '' != id">
+                and id=#{id}
+            </if>
+            <if test="null != userName and '' != userName">
+                and userName=#{userName}
+            </if>
+            <if test="null != password and '' != password">
+                and password=#{password}
+            </if>
+            <if test="null != sex and '' != sex">
+                and sex=#{sex}
+            </if>
+            <if test="null != age and '' != age">
+                and age=#{age}
+            </if>
+            <if test="null != permission and '' != permission">
+                and permission=#{permission}
+            </if>
+            <if test="null != isDelete and '' != isDelete">
+                and isDelete=#{isDelete}
+            </if>
+        </trim>
+    </select>
+
+    <insert id="addUser" parameterType="User">
+        insert into
+        user(userName,password,sex,age,permission,isDelete)
+        values (#{userName},#{password},#{sex},#{age},#{permission},#{isDelete})
+    </insert>
+
+    <select id="getUserInfo" parameterType="User" resultMap="userResultMap">
+        select * from user
+        <trim prefix="WHERE" prefixOverrides="and">
+            <if test="null != id and '' != id">
+                and id=#{id}
+            </if>
+            <if test="null != userName and '' != userName">
+                and userName=#{userName}
+            </if>
+            <if test="null != password and '' != password">
+                and password=#{password}
+            </if>
+            <if test="null != sex and '' != sex">
+                and sex=#{sex}
+            </if>
+            <if test="null != age and '' != age">
+                and age=#{age}
+            </if>
+            <if test="null != permission and '' != permission">
+                and permission=#{permission}
+            </if>
+            <if test="null != isDelete and '' != isDelete">
+                and isDelete=#{isDelete}
+            </if>
+        </trim>
+    </select>
+    
+    <update id="updateUser" parameterType="User">
+        update user
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="null != userName and '' != userName">
+                userName=#{userName}
+            </if>
+            <if test="null != password and '' != password">
+                password=#{password}
+            </if>
+            <if test="null != sex and '' != sex">
+                sex=#{sex}
+            </if>
+            <if test="null != age and '' != age">
+                age=#{age}
+            </if>
+            <if test="null != permission and '' != permission">
+                permission=#{permission}
+            </if>
+            <if test="null != isDelete and '' != isDelete">
+                isDelete=#{isDelete}
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="User">
+        delete from user where id=#{id}
+    </delete>
+
+</mapper>
